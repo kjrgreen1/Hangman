@@ -14,14 +14,18 @@ let correct = []
 
 let incorrect = []
 
-document.onkeyup = function() {
-    let userguess = String.fromCharCode(event.keyCode).toLowerCase();
-
-      console.log(userguess);
-}
-
-for (let compGuess = (archerWords[Math.floor(Math.random()*archerWords.length)]), split = compGuess.split(''); split.length > correct;) {
+let compGuess = (archerWords[Math.floor(Math.random()*archerWords.length)]), split = compGuess.split('');
 
 console.log(split);
-break;
+
+document.onkeyup = function() {
+  let userguess = String.fromCharCode(event.keyCode).toLowerCase();
+
+  console.log(userguess);
+
+  if( split.length > correct) {
+
+  let answer = split.includes(userguess);
+  console.log(answer);
+  }
 }
