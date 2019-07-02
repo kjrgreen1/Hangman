@@ -10,9 +10,9 @@
 
 let archerWords = ['archer', 'malory', 'pam', 'sterling', 'lana', 'cheryl', 'krieger', 'cyril', 'ray', 'barry', 'cadillac', 'woodhouse', 'trexler', 'katya', 'nikolai', 'brett', 'slater', 'reynolds', 'vice', 'dreamland', 'danger', 'isis', 'ants', 'phrasing'];
 
-let correct = []
+let correct = [];
 
-let incorrect = []
+let incorrect = [];
 
 let compGuess = (archerWords[Math.floor(Math.random()*archerWords.length)]), split = compGuess.split('');
 
@@ -23,9 +23,29 @@ document.onkeyup = function() {
 
   console.log(userguess);
 
-  if( split.length > correct) {
+  console.log(new Set(split).size);
 
-  let answer = split.includes(userguess);
-  console.log(answer);
-  }
+  if (new Set(split).size > correct.length) {
+
+    let answer = split.includes(userguess);
+
+    console.log(answer)
+
+    if (answer === true && correct.includes(userguess) === false) {
+      correct.push(userguess);
+      console.log(correct);
+    } else if (answer !== true && incorrect.includes(userguess) === false) {
+      incorrect.push(userguess);
+      console.log(incorrect);
+    } else {
+      console.log(`Please guess again`)
+    }
+    if (new Set(split).size === correct.length) {
+      correct = [];
+      incorrect = [];
+      compGuess = (archerWords[Math.floor(Math.random()*archerWords.length)]), split = compGuess.split('');
+      console.log(split);
+    }
+  
+  } 
 }
