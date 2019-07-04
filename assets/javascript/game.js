@@ -1,6 +1,5 @@
 //display blanks for # of letters
 //reveal letter if correct
-//track number of wins
 
 let archerWords = ['archer', 'malory', 'pam', 'sterling', 'lana', 'cheryl', 'krieger', 'cyril', 'ray', 'barry', 'cadillac', 'woodhouse', 'trexler', 'katya', 'nikolai', 'brett', 'slater', 'reynolds', 'vice', 'dreamland', 'danger', 'isis', 'ants', 'phrasing'];
 
@@ -15,13 +14,24 @@ let guessesLeft = 8
 let wins = 0
 
 // Pick random word from array and split letters into new array
-let compGuess = (archerWords[Math.floor(Math.random()*archerWords.length)]), split = compGuess.split('');
+let compGuess = (archerWords[Math.floor(Math.random()*archerWords.length)]).split('');
 
-console.log(split);
+console.log (compGuess);
 
 let answerArray = [];
 for (let i = 0; i < compGuess.length; i++) {
-  answerArray[i] = '_ ';
+  answerArray[i] = '_';
+}
+
+function reset(){
+  correct = [];
+  incorrect = [];
+  compGuess = (archerWords[Math.floor(Math.random()*archerWords.length)]).split('');
+  answerArray = [];
+  for (let i = 0; i < compGuess.length; i++) {
+    answerArray[i] = '_';
+  }
+  guessesLeft = 8;
 }
 
 // Log user guess
@@ -30,7 +40,7 @@ document.onkeyup = function() {
 
   console.log(userguess);
 
-  if (split.includes(userguess) === true && correct.includes(userguess) === false) {
+  if (compGuess.includes(userguess) === true && correct.includes(userguess) === false) {
     correct.push(userguess);
     for (let j = 0; j < compGuess.length; j++) {
       if (compGuess[j] === userguess) {
@@ -39,21 +49,22 @@ document.onkeyup = function() {
     }
     console.log(correct);
     console.log(answerArray);
-  } else if (split.includes(userguess) !== true && incorrect.includes(userguess) === false) {
+  } else if (compGuess.includes(userguess) !== true && incorrect.includes(userguess) === false) {
     incorrect.push(userguess);
     console.log(incorrect);
     guessesLeft --;
   } else {
-    console.log(`Please guess again`)
+    console.log(`Please guess again`);
   }
-  if (new Set(split).size === correct.length) {
-    wins ++;
-    correct = [];
-    incorrect = [];
-    compGuess = (archerWords[Math.floor(Math.random()*archerWords.length)]), split = compGuess.split('');
-    console.log(split);
+  if (new Set(compGuess).size === correct.length) {
+    reset();
   }
   if (guessesLeft === 0) {
-    //reveal answer
+    for (let k = 0; k < compGuess.length; k++) {
+        answerArray[k] = compGuess[k];
+    }
+    console.log(answerArray);
+    alert(`Better luck next time!`);
+    reset();
   }
 }
